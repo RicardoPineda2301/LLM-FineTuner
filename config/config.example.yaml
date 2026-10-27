@@ -1,0 +1,167 @@
+# Configuración de LLM-FineTuner
+# Copiar a config.yaml y editar según sea necesario
+
+# ============================================================================
+# CONFIGURACIÓN DEL MODELO
+# ============================================================================
+model:
+  # Modelo base de HuggingFace
+  base: "Qwen/Qwen2.5-7B-Instruct"
+  
+  # Si el modelo ya está descargado localmente
+  local_path: null  # Ejemplo: "/path/a/modelos/Qwen2.5-7B-Instruct"
+  
+  # Directorio de salida para modelos
+  output_dir: "data/output"
+  
+  # Cuantización para QLoRA (nf4, fp4, int8, int4)
+  quantization: "nf4"
+  
+  # Tipo de dispositivo (auto, cuda, cpu)
+  device: "auto"
+
+# ============================================================================
+# CONFIGURACIÓN DE ENTRENAMIENTO (QLoRA)
+# ============================================================================
+training:
+  # Parámetros LoRA
+  lora_rank: 16
+  lora_alpha: 32
+  lora_dropout: 0.05
+  
+  # Parámetros de entrenamiento
+  epochs: 3
+  batch_size: 2
+  learning_rate: 2e-4
+  max_seq_length: 4096
+  
+  # Optimización
+  optimizer: "paged_adamw_8bit"  # paged_adamw_8bit, adamw_8bit, adamw
+  weight_decay: 0.01
+  warmup_steps: 100
+  
+  # Gradient accumulation (útil para batch_size pequeño)
+  gradient_accumulation_steps: 1
+  
+  # Multi-GPU
+  multi_gpu: false
+  
+  # Mixed precision
+  fp16: true
+  bf16: false
+  tf32: false
+  
+  # Early stopping
+  early_stopping_patience: 3
+  
+  # Logging
+  logging_steps: 10
+  save_steps: 100
+  eval_steps: 100
+
+# ============================================================================
+# CONFIGURACIÓN DE DATOS
+# ============================================================================
+data:
+  # Directorios
+  input_dir: "data/raw"
+  processed_dir: "data/processed"
+  
+  # Filtros
+  min_length: 10  # Mínimo de caracteres por ejemplo
+  max_length: 4096  # Máximo de caracteres por ejemplo
+  
+  # Procesamiento
+  num_workers: 2  # Workers para dataloader
+  shuffle: true
+  
+  # Validación
+  val_split: 0.1  # Porcentaje para validación
+  test_split: 0.0  # Porcentaje para test (0.0 = no test)
+  
+  # Tokenización
+  tokenizer: null  # null = usar el del modelo base
+
+# ============================================================================
+# CONFIGURACIÓN DE FUSIÓN Y EXPORTACIÓN
+# ============================================================================
+merge:
+  # Fusionar modelo base + adaptador
+  merge_base_and_adapter: true
+  
+  # Directorio para modelos fusionados
+  merged_dir: "data/output/merged"
+
+export:
+  # Formato de exportación
+  format: "gguf"  # gguf, safetensors, pytorch
+  
+  # Directorio para modelos exportados
+  export_dir: "data/output/gguf"
+  
+  # Parámetros de cuantización para gguf
+  gguf_quantization: "int4"  # int4, int8, float16, float32
+
+# ============================================================================
+# CONFIGURACIÓN DE OLAMA
+# ============================================================================
+ollama:
+  # Nombre del modelo en Ollama
+  model_name: "finetuned-qwen2.5-7b"
+  
+  # Template para Modelfile
+  template: "qwen2.5"  # qwen2.5, mistral, llama
+  
+  # Ruta de Ollama (por defecto usa el PATH)
+  ollama_path: null  # Ejemplo: "C:/Program Files/Ollama/ollama.exe"
+  
+  # Directorio de paquetes Ollama
+  ollama_dir: "data/output/ollama"
+  
+  # Puerto de Ollama (por defecto: 11434)
+  port: 11434
+
+# ============================================================================
+# CONFIGURACIÓN DE LOGGING Y MONITOREO
+# ============================================================================
+logging:
+  # Nivel de logging
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  
+  # Directorio de logs
+  log_dir: "data/logs"
+  
+  # Nombre del archivo de log
+  log_file: "training.log"
+  
+  # TensorBoard
+  tensorboard: false
+  tensorboard_dir: "data/logs/tensorboard"
+
+# ============================================================================
+# CONFIGURACIÓN DE HARDWARE
+# ============================================================================
+hardware:
+  # Número de GPUs a usar
+  num_gpus: 1
+  
+  # ID de GPU principal (si hay múltiples)
+  gpu_id: 0
+  
+  # Limitar memoria GPU (en GB, null = no limite)
+  max_memory_per_gpu: null
+  
+  # Usar CPU solo
+  cpu_only: false
+
+# ============================================================================
+# CONFIGURACIÓN DE REANUDACIÓN
+# ============================================================================
+resume:
+  # Reanudar entrenamiento desde checkpoint
+  from_checkpoint: null  # Ruta al checkpoint
+  
+  # Guardar checkpoints
+  save_checkpoint: true
+  checkpoint_dir: "data/output/checkpoints"
+  checkpoint_freq: 1  # Cada N épocas

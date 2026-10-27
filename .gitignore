@@ -1,0 +1,78 @@
+# Dependencies
+venv/
+.env
+quickGuide.md
+
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+ENV/
+env/
+.venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+data/logs/
+
+# Datasets and outputs
+data/raw/*.jsonl
+data/processed/*.json
+data/output/
+
+# Model files
+*.gguf
+*.safetensors
+*.bin
+*.pth
+
+# HuggingFace cache
+.cache/
+huggingface/
+
+# Ollama data
+.ollama/
+
+# Local model cache
+models/
+
+# Config files with secrets
+config/config.yaml
+
+# Checkpoints
+*.ckpt
+
+# Temporary files
+*.tmp
+*.temp

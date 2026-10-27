@@ -1,0 +1,3 @@
+# Configuraciones locales - no incluir en el repositorio
+config.yaml
+*.env

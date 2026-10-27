@@ -1,0 +1,102 @@
+# LLM-FineTuner - Dependencias Python
+# ============================================================================
+
+# Core dependencies
+python>=3.11,<3.14
+
+# QLoRA and training
+unsloth[cu121]>=2024.11
+# Para CUDA 12.1 - usar una de estas según tu versión de CUDA:
+# unsloth[cu118]>=2024.11  # CUDA 11.8
+# unsloth[cu120]>=2024.11  # CUDA 12.0
+# unsloth[cu121]>=2024.11  # CUDA 12.1
+# unsloth[cu124]>=2024.11  # CUDA 12.4
+
+# HuggingFace ecosystem
+transformers>=4.40.0
+peft>=0.10.0
+accelerate>=0.27.0
+bitsandbytes>=0.43.0
+
+# Tokenization and datasets
+tokenizers>=0.15.0
+datasets>=2.18.0
+
+# PyTorch with CUDA
+# Instalar según tu versión de CUDA:
+# torch>=2.2.0,<3.0.0 --index-url https://download.pytorch.org/whl/cu121
+torch>=2.2.0,<3.0.0
+# Para CUDA 12.1: --index-url https://download.pytorch.org/whl/cu121
+# Para CUDA 11.8: --index-url https://download.pytorch.org/whl/cu118
+
+# Model export to GGUF
+llm-gguf>=0.1.0
+
+# YAML configuration
+pyyaml>=6.0.1
+
+# Progress bars and utilities
+tqdm>=4.66.0
+rich>=13.7.0
+
+# Logging and monitoring
+tensorboard>=2.16.0
+
+# File utilities
+pathlib>=1.0.1
+
+# Type hints (Python 3.11+)
+typing-extensions>=4.11.0
+
+# HTTP requests for HuggingFace
+requests>=2.31.0
+
+# NumPy for data processing
+numpy>=1.26.0
+
+# Pandas for data manipulation
+pandas>=2.2.0
+
+# For better error messages
+rich>=13.7.0
+
+# For configuration validation
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+
+# For file locking (multi-process safety)
+filelock>=3.13.0
+
+# For better CLI experience
+click>=8.1.7
+
+# For JSON lines handling
+jsonlines>=4.0.0
+
+# For memory profiling (optional)
+# memory-profiler>=0.61.0
+
+# For GPU monitoring (optional)
+# nvidia-ml-py3>=3.555.0
+
+# ============================================================================
+# Development dependencies (optional)
+# ============================================================================
+# -r requirements-dev.txt
+
+# ============================================================================
+# Installation notes:
+# ============================================================================
+# 1. Install PyTorch with CUDA first:
+#    pip install torch --index-url https://download.pytorch.org/whl/cu121
+#
+# 2. Then install Unsloth:
+#    pip install unsloth[cu121]
+#
+# 3. Then install the rest:
+#    pip install -r requirements.txt
+#
+# Or install everything at once:
+#    pip install torch --index-url https://download.pytorch.org/whl/cu121
+#    pip install unsloth[cu121]
+#    pip install -r requirements.txt
